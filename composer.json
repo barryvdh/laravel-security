@@ -1,0 +1,21 @@
+{
+    "name": "barryvdh/laravel-security",
+    "description": "",
+    "authors": [
+        {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x",
+        "symfony/security-core": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Barryvdh\\Security": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,15 +1,15 @@
 <?php namespace Barryvdh\Security;
 
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+
 class Facade extends \Illuminate\Support\Facades\Facade {
 
     /**
-     * Add a voter. Probably not the best way to do this..
-     * @param $voter
+     * Add a voter for the AccessDecisionManager
+     * @param \Symfony\Component\Security\Core\Authorization\Voter\VoterInterface $voter
      */
-    public static function addVoter($voter){
-        $app = self::$app;
-        $voters = $app['security.voters'];
-        $app['security.voters'] = $app->share(function() use ($voters, $voter){
+    public static function addVoter(VoterInterface $voter){
+        static::$app->extend('security.voters', function($voters) use ($voter) {
                 $voters[] = $voter;
                 return $voters;
             });

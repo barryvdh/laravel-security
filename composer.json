@@ -15,7 +15,10 @@
     "autoload": {
         "psr-0": {
             "Barryvdh\\Security": "src/"
-        }
+        },
+        "files": [
+            "src/Barryvdh/Security/helpers.php"
+        ]
     },
     "minimum-stability": "dev"
 }

@@ -19,7 +19,7 @@ class SecurityServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
 
 	/**
 	 * Register the service provider.
@@ -28,10 +28,11 @@ class SecurityServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+
+        $this->package('barryvdh/laravel-security');
         $app = $this->app;
 
-        $app['security.role_hierarchy'] = array();
-        $app['security.access_rules'] = array();
+        $app['security.role_hierarchy'] = $app['config']->get('laravel-security::config.role_hierarchy', array());
 
         $app['security'] = $app->share(function ($app) {
                 $security = new SecurityContext($app['security.authentication_manager'], $app['security.access_manager']);
@@ -72,7 +73,7 @@ class SecurityServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('security', 'security.role_hierarchy', 'security.access_rules', 'security.authentication_manager', 'security.access_manager', 'security.voters' );
+		return array('security', 'security.role_hierarchy' , 'security.authentication_manager', 'security.access_manager', 'security.voters' );
 	}
 
 }

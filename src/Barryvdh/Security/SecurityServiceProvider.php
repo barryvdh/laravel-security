@@ -33,6 +33,7 @@ class SecurityServiceProvider extends ServiceProvider {
         $app = $this->app;
 
         $app['security.role_hierarchy'] = $app['config']->get('laravel-security::config.role_hierarchy', array());
+        $app['security.strategy'] = $app['config']->get('laravel-security::config.strategy', 'affirmative');
 
         $app['security'] = $app->share(function ($app) {
                 $security = new SecurityContext($app['security.authentication_manager'], $app['security.access_manager']);
@@ -45,7 +46,7 @@ class SecurityServiceProvider extends ServiceProvider {
             });
 
         $app['security.access_manager'] = $app->share(function ($app) {
-                return new AccessDecisionManager($app['security.voters']);
+                return new AccessDecisionManager($app['security.voters'], $app['security.strategy']);
             });
 
         $app['security.voters'] = $app->share(function ($app) {

@@ -2,6 +2,22 @@
 
 return array(
 
+ /*
+  |--------------------------------------------------------------------------
+  | Access Decision Strategy
+  |--------------------------------------------------------------------------
+  |
+  | Set which strategy should be used to determine access. Possible values are:
+  |
+  | affirmative (default)
+  |     grant access as soon as any voter returns an affirmative response;
+  |  consensus
+  |     grant access if there are more voters granting access than there are denying;
+  |  unanimous
+  |     only grant access if none of the voters has denied access;
+  |
+  */
+    'strategy' => 'affirmative',
 
  /*
   |--------------------------------------------------------------------------

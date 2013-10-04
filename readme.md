@@ -37,14 +37,12 @@ By default, only 2 Voters are included:
 
 To use roles, add a function getRoles() to your User model, which returns an array of Role strings
 
-    ```php
     public function roles(){
         return $this->belongsToMany('Role');
     }
     public function getRoles(){
         return $this->roles()->lists('name');
     }
-    ```
 
 You can add voters by extending $app['security.voters'] or using the facade:
 

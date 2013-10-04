@@ -65,3 +65,22 @@ You can check access using to IoC Container, the facade and a helper function:
 
 The first argument is the attribute you want to check, the second is an optional object, on which you want to check the access.
 For example, you can write a Voter to check if the current user can edit a comment, based on his ownership on that object or his role.
+
+### Filters
+You can use this in Laravel's Route Filters, both in the routes and in controllers.
+
+    Route::get('admin', array('before' => 'granted:ROLE_ADMIN', function(){..}));
+    Route::filter('granted', function($route, $request, $attribute){
+            if (!is_granted($attribute))
+                return Redirect::route('login');
+    });
+
+If you set up Model Binding, you have easy access to the objects.
+
+    Route::model('company', 'Company');
+    Route::get('companies/{company}', array('uses'=> 'CompanyController@getView', 'before' => 'company:view'));
+    Route::filter('company', function($route, $request, $attribute){
+        $company = $route->getParameter('company');
+        if (!is_granted($attribute, $company))
+            \App::abort('401', 'You do not have permission for '.$attribute.' on this company..');
+    });

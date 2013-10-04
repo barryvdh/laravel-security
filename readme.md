@@ -54,6 +54,7 @@ The voter will be called to vote on an attribute (and possibly an object) and al
 Based on the strategy, the final decision is made based on the votes. (By default, 1 allow is enough)
 
 You can access the User object with $token->getUser();
+For an example, see http://symfony.com/doc/current/cookbook/security/voters.html
 
 ### Checking access
 You can check access using to IoC Container, the facade and a helper function:

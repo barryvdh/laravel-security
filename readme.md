@@ -53,6 +53,8 @@ You can define which attributes (ie. ROLE_ADMIN, IS_AUTHENTICATED, EDIT etc) and
 The voter will be called to vote on an attribute (and possibly an object) and allow, deny or abstain access.
 Based on the strategy, the final decision is made based on the votes. (By default, 1 allow is enough)
 
+You can access the User object with $token->getUser();
+
 ### Checking access
 You can check access using to IoC Container, the facade and a helper function:
 

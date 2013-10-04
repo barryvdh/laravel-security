@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 class AuthVoter implements VoterInterface
 {
     const IS_AUTHENTICATED = 'IS_AUTHENTICATED';
+    const AUTH = 'AUTH';
     private $guard;
 
     /**
@@ -16,7 +17,7 @@ class AuthVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return self::IS_AUTHENTICATED === $attribute;
+        return self::IS_AUTHENTICATED === $attribute or self::AUTH === $attribute;
     }
 
     /**
@@ -40,7 +41,7 @@ class AuthVoter implements VoterInterface
 
             $result = VoterInterface::ACCESS_DENIED;
 
-            if (self::IS_AUTHENTICATED === $attribute && $token->isAuthenticated() ) {
+            if ((self::IS_AUTHENTICATED === $attribute or self::AUTH === $attribute) && $token->isAuthenticated() ) {
                 return VoterInterface::ACCESS_GRANTED;
             }
 

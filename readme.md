@@ -32,7 +32,7 @@ You can publish the config to change the strategy and add your own Role Hierarch
 
 ### Voters
 By default, only 2 Voters are included:
- - AuthVoter, check if a user is autenticated (`IS_AUTHENTICATED`)
+ - AuthVoter, check if a user is autenticated (`IS_AUTHENTICATED` or `AUTH`)
  - RoleHierarchyVoter: Check a user for a role, using the hierarchy in the config. (`ROLE_ADMIN`, `ROLE_EDITOR` etc)
 
 To use roles, add a function getRoles() to your User model, which returns an array of Role strings
@@ -60,8 +60,8 @@ For an example, see http://symfony.com/doc/current/cookbook/security/voters.html
 You can check access using to IoC Container, the facade and a helper function:
 
     App::make('security')->isGranted('ROLE_ADMIN');
-    Security::isGranted('EDIT', $post);
-    is_granted('IS_AUTHENTICATED');
+    Security::isGranted('edit', $post);
+    is_granted('AUTH');
 
 The first argument is the attribute you want to check, the second is an optional object, on which you want to check the access.
 For example, you can write a Voter to check if the current user can edit a comment, based on his ownership on that object or his role.

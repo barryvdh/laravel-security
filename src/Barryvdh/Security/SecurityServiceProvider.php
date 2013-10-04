@@ -58,6 +58,10 @@ class SecurityServiceProvider extends ServiceProvider {
         $app['events']->listen('auth.login', function($user) use($app){
                 $app['security']->setToken(new LaravelToken($user));
             });
+
+        $app['events']->listen('auth.logout', function() use($app){
+                $app['security']->setToken(new LaravelToken(null));
+            });
 	}
 
 

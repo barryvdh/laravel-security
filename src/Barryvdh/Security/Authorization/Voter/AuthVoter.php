@@ -40,7 +40,7 @@ class AuthVoter implements VoterInterface
 
             $result = VoterInterface::ACCESS_DENIED;
 
-            if (self::IS_AUTHENTICATED === $attribute && $token->getUser() !== null ) {
+            if (self::IS_AUTHENTICATED === $attribute && $token->isAuthenticated() ) {
                 return VoterInterface::ACCESS_GRANTED;
             }
 

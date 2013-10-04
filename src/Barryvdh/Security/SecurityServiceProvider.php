@@ -33,19 +33,9 @@ class SecurityServiceProvider extends ServiceProvider {
         $app['security.role_hierarchy'] = array();
         $app['security.access_rules'] = array();
 
-        $app['security.token'] = $app->share(function ($app) {
-                $user = $app['auth']->user();
-                if(!is_null($user) and is_callable(array($user, 'getRoles'))){
-                    $roles = $user->getRoles();
-                }else{
-                    $roles = array();
-                }
-                return new LaravelToken($user, $roles);
-            });
-
         $app['security'] = $app->share(function ($app) {
                 $security = new SecurityContext($app['security.authentication_manager'], $app['security.access_manager']);
-                $security->setToken($app['security.token']);
+                $security->setToken(new LaravelToken($app['auth']->user()));
                 return $security;
             });
 
@@ -63,12 +53,13 @@ class SecurityServiceProvider extends ServiceProvider {
                     new AuthVoter(),
                 );
             });
+
+        //Listener for Login event
+        $app['events']->listen('auth.login', function($user) use($app){
+                $app['security']->setToken(new LaravelToken($user));
+            });
 	}
 
-    public function boot() {
-
-
-    }
 
 	/**
 	 * Get the services provided by the provider.

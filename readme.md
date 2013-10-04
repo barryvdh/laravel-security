@@ -35,14 +35,14 @@ By default, only 2 Voters are included:
  - AuthVoter, check if a user is autenticated (`IS_AUTHENTICATED`)
  - RoleHierarchyVoter: Check a user for a role, using the hierarchy in the config. (`ROLE_ADMIN`, `ROLE_EDITOR` etc)
     * To use roles, add a function getRoles() to your User model, which returns an array of Role strings
-
-        public function roles(){
-            return $this->belongsToMany('Role');
-        }
-        public function getRoles(){
-            return $this->roles()->lists('name');
-        }
-
+```php
+    public function roles(){
+        return $this->belongsToMany('Role');
+    }
+    public function getRoles(){
+        return $this->roles()->lists('name');
+    }
+```
 You can add voters by extending $app['security.voters'] or using the facade:
 
     Facade:addVoter(new MyVoter());

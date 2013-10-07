@@ -69,18 +69,14 @@ For example, you can write a Voter to check if the current user can edit a comme
 ### Filters
 You can use this in Laravel's Route Filters, both in the routes and in controllers.
 
-    Route::get('admin', array('before' => 'granted:ROLE_ADMIN', function(){..}));
-    Route::filter('granted', function($route, $request, $attribute){
-            if (!is_granted($attribute))
-                return Redirect::route('login');
+    Route::get('admin', array('before' => 'is_granted:ROLE_ADMIN', function(){..}));
+    Route::filter('is_granted', function($route, $request, $attribute, $parameter=null){
+        $object = $parameter ? $route->getParameter($parameter) : null;
+        if (!is_granted($attribute, $object))
+            return Redirect::route('login');
     });
 
 If you set up Model Binding, you have easy access to the objects.
 
     Route::model('company', 'Company');
-    Route::get('companies/{company}', array('uses'=> 'CompanyController@getView', 'before' => 'company:view'));
-    Route::filter('company', function($route, $request, $attribute){
-        $company = $route->getParameter('company');
-        if (!is_granted($attribute, $company))
-            \App::abort('401', 'You do not have permission for '.$attribute.' on this company..');
-    });
+    Route::get('companies/{company}', array('uses'=> 'CompanyController@getView', 'before' => 'is_granted:view,company'));

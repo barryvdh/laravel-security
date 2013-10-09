@@ -1,8 +1,8 @@
 ## Laravel Security Component
 
-### Very alpha, API might change!
+### Still in alpha, API might change!
 
-This packages tries to integrate Symfony Security Core in Laravel, mainly to use the Voters to check acces to roles/objects. See http://symfony.com/doc/current/components/security/authorization.html
+This packages tries to integrate Symfony Security Core in Laravel, mainly to use the Voters to check acces to roles/objects. See [Symfony Authorization](http://symfony.com/doc/current/components/security/authorization.html)
 
 
 ### Install
@@ -35,7 +35,7 @@ By default, only 2 Voters are included:
  - AuthVoter, check if a user is autenticated (`IS_AUTHENTICATED` or `AUTH`)
  - RoleHierarchyVoter: Check a user for a role, using the hierarchy in the config. (`ROLE_ADMIN`, `ROLE_EDITOR` etc)
 
-To use roles, add a function getRoles() to your User model, which returns an array of Role strings
+To use roles, add a function getRoles() to your User model, which returns an array of Role strings (Note: roles must begin with ROLE_)
 
     public function roles(){
         return $this->belongsToMany('Role');
@@ -48,13 +48,13 @@ You can add voters by extending $app['security.voters'] or using the facade:
 
     Facade:addVoter(new MyVoter());
 
-Voters have to implement VoterInterface (https://github.com/symfony/Security/blob/master/Core/Authorization/Voter/VoterInterface.php).
+Voters have to implement [VoterInterface](https://github.com/symfony/Security/blob/master/Core/Authorization/Voter/VoterInterface.php).
 You can define which attributes (ie. ROLE_ADMIN, IS_AUTHENTICATED, EDIT etc) and which objects the voter can handle.
 The voter will be called to vote on an attribute (and possibly an object) and allow, deny or abstain access.
 Based on the strategy, the final decision is made based on the votes. (By default, 1 allow is enough)
 
 You can access the User object with $token->getUser();
-For an example, see http://symfony.com/doc/current/cookbook/security/voters.html
+For an example, see the [Symfony Cookbook about Voters](http://symfony.com/doc/current/cookbook/security/voters.html)
 
 ### Checking access
 You can check access using to IoC Container, the facade and a helper function:
@@ -71,8 +71,7 @@ You can use this in Laravel's Route Filters, both in the routes and in controlle
 
     Route::get('admin', array('before' => 'is_granted:ROLE_ADMIN', function(){..}));
     Route::filter('is_granted', function($route, $request, $attribute, $parameter=null){
-        $object = $parameter ? $route->getParameter($parameter) : null;
-        if (!is_granted($attribute, $object))
+        if (!is_granted($attribute, $route->getParameter($parameter)))
             return Redirect::route('login');
     });
 

@@ -1,6 +1,8 @@
 {
     "name": "barryvdh/laravel-security",
-    "description": "",
+    "description": "This packages integrates Symfony Security Core in Laravel, mainly to use the Voters to check acces to roles/objects.",
+    "keywords": ["laravel", "security", "voters", "roles", "auth"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Barry vd. Heuvel",

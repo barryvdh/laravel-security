@@ -1,8 +1,8 @@
 ## Laravel Security Component
 
-### Still in alpha, API might change!
+### Still in alpha, API might change in new versions, so require 0.1.x!
 
-This packages tries to integrate Symfony Security Core in Laravel, mainly to use the Voters to check acces to roles/objects. See [Symfony Authorization](http://symfony.com/doc/current/components/security/authorization.html)
+This packages integrates Symfony Security Core in Laravel, mainly to use the Voters to check acces to roles/objects. See [Symfony Authorization](http://symfony.com/doc/current/components/security/authorization.html)
 
 
 ### Install

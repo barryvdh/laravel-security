@@ -6,9 +6,9 @@ This packages tries to integrate Symfony Security Core in Laravel, mainly to use
 
 
 ### Install
-Add this package to your composer.json and `composer update`
+Add this package to your composer.json and run `composer update`
 
-    "barryvdh/laravel-security": "dev-master"
+    "barryvdh/laravel-security": "0.1.x"
 
 After updating, add the ServiceProvider to ServiceProvider array in app/config/app.php
 

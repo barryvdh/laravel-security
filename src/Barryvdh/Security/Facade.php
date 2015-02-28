@@ -17,6 +17,6 @@ class Facade extends \Illuminate\Support\Facades\Facade {
     /**
      * {@inheritDoc}
      */
-    protected static function getFacadeAccessor() { return 'security'; }
+    protected static function getFacadeAccessor() { return 'security.authorization_checker'; }
 
 }

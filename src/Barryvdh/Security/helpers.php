@@ -13,7 +13,7 @@ if ( ! function_exists('is_granted') ){
      * @return Boolean
      */
     function is_granted($attributes, $object = null){
-        return app('security')->isGranted($attributes, $object);
+        return app('security.authorization_checker')->isGranted($attributes, $object);
     }
 
 }

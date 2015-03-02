@@ -71,11 +71,14 @@ class SecurityServiceProvider extends ServiceProvider {
                 return new AccessDecisionManager($app['security.voters'], $app['security.strategy']);
             });
 
+        $app->bind('Symfony\Component\Security\Core\Role\RoleHierarchyInterface', function($app) {
+                return new RoleHierarchy($app['security.role_hierarchy']);
+            });
+
         $app['security.voters'] = $app->share(function ($app) {
-                return array(
-                    new RoleHierarchyVoter(new RoleHierarchy($app['security.role_hierarchy'])),
-                    new AuthVoter(),
-                );
+                return array_map(function($voter) use ($app) {
+                    return $app->make($voter);
+                }, $app['config']->get('security.voters'));
             });
 
         //Listener for Login event

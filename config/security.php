@@ -31,7 +31,18 @@ return array(
   | )
   |
   */
-  'role_hierarchy' => array()
+  'role_hierarchy' => array(),
 
-
+  /*
+  |--------------------------------------------------------------------------
+  | Voters
+  |--------------------------------------------------------------------------
+  |
+  | The voters listed here will be automatically added.
+  |
+  */
+  'voters' => [
+    'Barryvdh\Security\Authorization\Voter\AuthVoter',
+    'Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter',
+  ],
 );

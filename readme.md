@@ -44,9 +44,16 @@ To use roles, add a function getRoles() to your User model, which returns an arr
         return $this->roles()->lists('name');
     }
 
-You can add voters by extending $app['security.voters'] or using the facade:
+You can add voters by adding them to the config.
 
-    Facade:addVoter(new MyVoter());
+    'voters' => [
+        ...
+        'App\Security\MyVoter.php',
+    ],
+
+You can also add voters by extending $app['security.voters'] or using the facade:
+
+    Security::addVoter(new MyVoter());
 
 Voters have to implement [VoterInterface](https://github.com/symfony/Security/blob/master/Core/Authorization/Voter/VoterInterface.php).
 You can define which attributes (ie. ROLE_ADMIN, IS_AUTHENTICATED, EDIT etc) and which objects the voter can handle.

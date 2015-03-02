@@ -15,12 +15,16 @@
         "symfony/security-core": "~2.6"
     },
     "autoload": {
-        "psr-0": {
-            "Barryvdh\\Security": "src/"
+        "psr-4": {
+            "Barryvdh\\Security\\": "src/"
         },
         "files": [
-            "src/Barryvdh/Security/helpers.php"
+            "src/helpers.php"
         ]
     },
-    "minimum-stability": "dev"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
 }

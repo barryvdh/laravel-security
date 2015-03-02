@@ -26,8 +26,8 @@ class SecurityServiceProvider extends ServiceProvider {
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../../config/security.php' => config_path('security.php'),
-        ]);
+            __DIR__.'/../config/security.php' => config_path('security.php'),
+        ], 'config');
     }
 
 	/**
@@ -38,7 +38,7 @@ class SecurityServiceProvider extends ServiceProvider {
 	public function register()
 	{
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/security.php', 'security'
+            __DIR__.'/../config/security.php', 'security'
         );
 
         $app = $this->app;

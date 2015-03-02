@@ -1,6 +1,6 @@
 ## Laravel Security Component
 
-### Still in alpha, API might change in new versions, so require 0.1.x!
+### Version 0.2.x@dev is for Laravel 5. Use 0.1.x for Laravel 4!
 
 This packages integrates Symfony Security Core in Laravel, mainly to use the Voters to check acces to roles/objects. See [Symfony Authorization](http://symfony.com/doc/current/components/security/authorization.html)
 
@@ -8,9 +8,9 @@ This packages integrates Symfony Security Core in Laravel, mainly to use the Vot
 ### Install
 Add this package to your composer.json and run `composer update`
 
-    "barryvdh/laravel-security": "0.1.x"
+    "barryvdh/laravel-security": "0.2.x@dev"
 
-After updating, add the ServiceProvider to ServiceProvider array in app/config/app.php
+After updating, add the ServiceProvider to ServiceProvider array in config/app.php
 
     'Barryvdh\Security\SecurityServiceProvider'
 
@@ -22,9 +22,9 @@ You can optionally add the Facade as well, to provide faster access to the Secur
 ### Configure
 You can publish the config to change the strategy and add your own Role Hierarchy, to configure which roles inherit from each other.
 
-     $ php artisan config:publish barryvdh/laravel-security
+     $ php artisan vendor:publish config
 
-    //app/config/packages/barryvdh/laravel-security/config.php
+    //config/security.php
     'role_hierarchy' => array(
            'ROLE_ADMIN' => array('ROLE_USER'),
            'ROLE_SUPER_ADMIN' => array('ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH')
@@ -59,7 +59,7 @@ For an example, see the [Symfony Cookbook about Voters](http://symfony.com/doc/c
 ### Checking access
 You can check access using to IoC Container, the facade and a helper function:
 
-    App::make('security')->isGranted('ROLE_ADMIN');
+    App::make('security.authorization_checker')->isGranted('ROLE_ADMIN');
     Security::isGranted('edit', $post);
     is_granted('AUTH');
 

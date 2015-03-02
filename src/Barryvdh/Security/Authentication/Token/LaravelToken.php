@@ -3,13 +3,14 @@
 namespace Barryvdh\Security\Authentication\Token;
 
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
-use Illuminate\Auth\UserInterface;
+use Illuminate\Contracts\Auth\Authenticatable;
+
 class LaravelToken extends AbstractToken
 {
 
     /**
      * Constructor.
-     * @param \Illuminate\Auth\UserInterface $user The user
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user The user
      */
     public function __construct($user)
     {

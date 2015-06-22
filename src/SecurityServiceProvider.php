@@ -62,6 +62,7 @@ class SecurityServiceProvider extends ServiceProvider {
         $app['security.authorization_checker'] = $app->share(function ($app) {
                 return new AuthorizationChecker($app['security.token_storage'], $app['security.authentication_manager'], $app['security.access_manager']);
             });
+        $app->alias('security.authorization_checker', 'Symfony\Component\Security\Core\Authorization\AuthorizationChecker');
 
         $app['security.authentication_manager'] = $app->share(function ($app) {
                 return new AuthenticationManager();

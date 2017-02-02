@@ -46,29 +46,29 @@ class SecurityServiceProvider extends ServiceProvider {
         $app['security.role_hierarchy'] = $app['config']->get('security.role_hierarchy', array());
         $app['security.strategy'] = $app['config']->get('security.strategy', 'affirmative');
 
-        $app['security'] = $app->share(function ($app) {
+        $app->singleton('security', function ($app) {
                 // Deprecated. Use security.authorization_checker instead.
                 $security = new SecurityContext($app['security.authentication_manager'], $app['security.access_manager']);
                 $security->setToken(new LaravelToken($app['auth']->user()));
                 return $security;
             });
 
-        $app['security.token_storage'] = $app->share(function($app) {
+        $app->singleton('security.token_storage', function($app) {
                 $tokenStorage = new TokenStorage();
                 $tokenStorage->setToken(new LaravelToken($app['auth']->user()));
                 return $tokenStorage;
             });
 
-        $app['security.authorization_checker'] = $app->share(function ($app) {
+        $app->singleton('security.authorization_checker', function ($app) {
                 return new AuthorizationChecker($app['security.token_storage'], $app['security.authentication_manager'], $app['security.access_manager']);
             });
         $app->alias('security.authorization_checker', 'Symfony\Component\Security\Core\Authorization\AuthorizationChecker');
 
-        $app['security.authentication_manager'] = $app->share(function ($app) {
+        $app->singleton('security.authentication_manager', function ($app) {
                 return new AuthenticationManager();
             });
 
-        $app['security.access_manager'] = $app->share(function ($app) {
+        $app->singleton('security.access_manager', function ($app) {
                 return new AccessDecisionManager($app['security.voters'], $app['security.strategy']);
             });
 
@@ -76,7 +76,7 @@ class SecurityServiceProvider extends ServiceProvider {
                 return new RoleHierarchy($app['security.role_hierarchy']);
             });
 
-        $app['security.voters'] = $app->share(function ($app) {
+        $app->singleton('security.voters', function ($app) {
                 return array_map(function($voter) use ($app) {
                     return $app->make($voter);
                 }, $app['config']->get('security.voters'));

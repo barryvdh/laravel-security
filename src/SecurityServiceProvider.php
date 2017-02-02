@@ -46,31 +46,35 @@ class SecurityServiceProvider extends ServiceProvider {
         $app['security.role_hierarchy'] = $app['config']->get('security.role_hierarchy', array());
         $app['security.strategy'] = $app['config']->get('security.strategy', 'affirmative');
 
-        $app['security'] = $app->share(function ($app) {
+        $app->bindShared('Symfony\Component\Security\Core\SecurityContextInterface', function ($app) {
                 // Deprecated. Use security.authorization_checker instead.
                 $security = new SecurityContext($app['security.authentication_manager'], $app['security.access_manager']);
                 $security->setToken(new LaravelToken($app['auth']->user()));
                 return $security;
             });
+        $app->alias('Symfony\Component\Security\Core\SecurityContextInterface', 'security');
 
-        $app['security.token_storage'] = $app->share(function($app) {
+        $app->bindShared('Symfony\Component\Security\Core\Authentication\Token\TokenInterface', function($app) {
                 $tokenStorage = new TokenStorage();
                 $tokenStorage->setToken(new LaravelToken($app['auth']->user()));
                 return $tokenStorage;
             });
+        $app->alias('Symfony\Component\Security\Core\Authentication\Token\TokenInterface', 'security.token_storage');
 
-        $app['security.authorization_checker'] = $app->share(function ($app) {
+        $app->bindShared('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface', function ($app) {
                 return new AuthorizationChecker($app['security.token_storage'], $app['security.authentication_manager'], $app['security.access_manager']);
             });
-        $app->alias('security.authorization_checker', 'Symfony\Component\Security\Core\Authorization\AuthorizationChecker');
+        $app->alias('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface', 'security.authorization_checker');
 
-        $app['security.authentication_manager'] = $app->share(function ($app) {
+        $app->bindShared('Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface', function ($app) {
                 return new AuthenticationManager();
             });
+        $app->alias('Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface', 'security.authentication_manager');
 
-        $app['security.access_manager'] = $app->share(function ($app) {
-                return new AccessDecisionManager($app['security.voters'], $app['security.strategy']);
-            });
+        $app->bindShared('Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface', function ($app) {
+            return new AccessDecisionManager($app['security.voters'], $app['security.strategy']);
+        });
+        $app->alias('Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface', 'security.access_manager');
 
         $app->bind('Symfony\Component\Security\Core\Role\RoleHierarchyInterface', function($app) {
                 return new RoleHierarchy($app['security.role_hierarchy']);

@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x",
+        "illuminate/support": "^5.0",
         "symfony/security-core": "~2.6|~3.0"
     },
     "autoload": {
@@ -23,8 +23,13 @@
         ]
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "0.2-dev"
+        "laravel": {
+            "providers": [
+                "Barryvdh\\Security\\SecurityServiceProvider"
+            ],
+            "aliases": {
+                "Security": "Barryvdh\\Security\\Facade"
+            }
         }
     }
 }
